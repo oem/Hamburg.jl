@@ -1,6 +1,6 @@
 module Covid19
 
-using HTTP, Gumbo, Cascadia, HTTP
+using HTTP, Gumbo, Cascadia
 using Cascadia: matchFirst
 
 export fetchcurrent
