@@ -14,10 +14,8 @@ function fetchcurrent()
   deaths = parsedeaths(html.root)
   hospitalizations = parsehospitalizations(html.root)
   trend = parsetrend(html.root)
-  @show infected
-  @show deaths
-  @show hospitalizations
-  @show trend
+  Dict(:infected => Dict(:total => infected[1], :recovered => infected[2], :new => infected[3]),
+       :trend => trend)
 end
 
 function parseinfected(root)
@@ -37,7 +35,6 @@ function parsetrend(root)
 end
 
 function parsenumbers(el)
-  @show el
   text = el[2].text
   parse(Int, match(r"\d+", text).match)
 end
