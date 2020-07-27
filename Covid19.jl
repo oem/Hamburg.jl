@@ -1,12 +1,13 @@
 module Covid19
 
-using HTTP, Gumbo, Cascadia
+using HTTP, Gumbo, Cascadia, DataFrames, CSV
 using Cascadia: matchFirst
 using ..DatesInGerman
 
 export fetchcurrent
 
 const URL = "https://www.hamburg.de/corona-zahlen/"
+const CSV_FILE = "infected.csv"
 
 function fetchcurrent()
   response = HTTP.get(URL)
@@ -58,6 +59,13 @@ end
 function parsenumbers(el)
   text = el[2].text
   parse(Int, match(r"\d+", text).match)
+end
+
+function save()
+  infected = fetchcurrent()[:infected]
+  df = DataFrame(infected)
+  persisted = CSV.read(CSV_FILE)
+  unique(vcat(df, persisted), :recordedat) |> CSV.write(CSV_FILE)
 end
 
 end # module
