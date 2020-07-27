@@ -2,6 +2,7 @@ module Covid19
 
 using HTTP, Gumbo, Cascadia
 using Cascadia: matchFirst
+using ..DatesInGerman
 
 export fetchcurrent
 
@@ -15,14 +16,20 @@ function fetchcurrent()
   hospitalizations = parsehospitalizations(html.root)
   trend = parsetrend(html.root)
   boroughs = parseboroughs(html.root)
+  recordedat = parsedate(html.root)
 
-  Dict(:infected => Dict(:total => infected[1], :recovered => infected[2], :new => infected[3]),
+  Dict(:infected => Dict(:total => infected[1], :recovered => infected[2], :new => infected[3], :recordedat => recordedat),
        :trend => trend,
        :boroughs => boroughs)
 end
 
 function parseinfected(root)
   map(parsenumbers, eachmatch(sel".c_chart.one .chart_legend li", root))
+end
+
+function parsedate(root)
+  daterecorded = matchFirst(sel".chart_publication", root)[1].text
+  DatesInGerman.parsefrom(daterecorded)
 end
 
 function parsedeaths(root)
