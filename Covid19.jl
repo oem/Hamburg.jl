@@ -11,18 +11,22 @@ function fetchcurrent()
   response = HTTP.get(URL)
   html = parsehtml(String(response))
   infected = parseinfected(html.root)
-  infected
+  deaths = parsedeaths(html.root)
+  @show infected
+  @show deaths
 end
 
 function parseinfected(root)
-  infected, healed, new = map(eachmatch(sel".c_chart.one .chart_legend li", root)) do el
-    text = el[2].text
-    parse(Int, match(r"\d+", text).match)
-  end
+  map(parsenumbers, eachmatch(sel".c_chart.one .chart_legend li", root))
 end
 
 function parsedeaths(root)
-  eachmatch(sel".c_chart.two .chart_legend li", root)
+  map(parsenumbers,eachmatch(sel".c_chart.two .chart_legend li:not(.c_chart_show_noshow)", root))
+end
+
+function parsenumbers(el)
+  text = el[2].text
+  parse(Int, match(r"\d+", text).match)
 end
 
 end # module
