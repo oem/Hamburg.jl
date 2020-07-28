@@ -8,6 +8,7 @@ export fetchcurrent, recorded
 
 const URL = "https://www.hamburg.de/corona-zahlen/"
 const CSV_FILE = "infected.csv"
+const CSV_BOROUGHS = "boroughs.csv"
 
 function fetchcurrent()
   response = HTTP.get(URL)
@@ -17,7 +18,7 @@ function fetchcurrent()
   hospitalizations = parsehospitalizations(html.root)
   trend = parsetrend(html.root)
   boroughs = parseboroughs(html.root)
-  recordedat = parsedate(html.root)
+  recordedat = parsedateinfected(html.root)
 
   Dict(:infected => Dict(:total => infected[1], :recovered => infected[2], :new => infected[3], :recordedat => recordedat),
        :deaths => Dict(:total => deaths[1], :new => deaths[2]),
@@ -33,8 +34,13 @@ function parseinfected(root)
   map(parsenumbers, eachmatch(sel".c_chart.one .chart_legend li", root))
 end
 
-function parsedate(root)
+function parsedateinfected(root)
   daterecorded = matchFirst(sel".chart_publication", root)[1].text
+  DatesInGerman.parsefrom(daterecorded)
+end
+
+function parsedateboroughs(root)
+  daterecorded = eachmatch(sel".table-article + p", root)[end][1].text
   DatesInGerman.parsefrom(daterecorded)
 end
 
@@ -52,12 +58,13 @@ end
 
 function parseboroughs(root)
   rows = eachmatch(sel".table-article tr", root)[8:end]
-  mapped = Dict{String, Int64}()
+  mapped = Dict{String, Any}()
   foreach(rows) do row
     name = matchFirst(sel"td:first-child", row)[1].text
     num = parse(Int, matchFirst(sel"td:last-child", row)[1].text)
     mapped[name] = num
   end
+  mapped["recordedat"] = parsedateboroughs(root)
   mapped
 end
 
@@ -81,6 +88,9 @@ function recordInfected(current)
 end
 
 function recordByBorough(current)
+  df = DataFrame(current[:boroughs])
+  persisted = CSV.read(CSV_BOROUGHS)
+  unique(vcat(df, persisted), :recordedat) |> CSV.write(CSV_BOROUGHS)
 end
 
 end # module
