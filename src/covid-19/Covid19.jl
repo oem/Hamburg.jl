@@ -12,6 +12,7 @@ const CSV_BOROUGHS = "src/covid-19/boroughs.csv"
 function fetchcurrent()
   response = HTTP.get(URL)
   html = parsehtml(String(response))
+
   infected = parseinfected(html.root)
   deaths = parsedeaths(html.root)
   hospitalizations = parsehospitalizations(html.root)
