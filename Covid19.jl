@@ -4,7 +4,7 @@ using HTTP, Gumbo, Cascadia, DataFrames, CSV
 using Cascadia: matchFirst
 using ..DatesInGerman
 
-export fetchcurrent
+export fetchcurrent, recorded
 
 const URL = "https://www.hamburg.de/corona-zahlen/"
 const CSV_FILE = "infected.csv"
@@ -23,6 +23,10 @@ function fetchcurrent()
        :deaths => Dict(:total => deaths[1], :new => deaths[2]),
        :trend => trend,
        :boroughs => boroughs)
+end
+
+function recorded()
+  CSV.read(CSV_FILE)
 end
 
 function parseinfected(root)
@@ -62,7 +66,7 @@ function parsenumbers(el)
   parse(Int, match(r"\d+", text).match)
 end
 
-function save()
+function record()
   stats = fetchcurrent()
   infected = stats[:infected]
   infected[:deaths] = stats[:deaths][:total]
