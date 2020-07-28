@@ -20,6 +20,7 @@ function fetchcurrent()
   recordedat = parsedate(html.root)
 
   Dict(:infected => Dict(:total => infected[1], :recovered => infected[2], :new => infected[3], :recordedat => recordedat),
+       :deaths => Dict(:total => deaths[1], :new => deaths[2]),
        :trend => trend,
        :boroughs => boroughs)
 end
@@ -62,7 +63,9 @@ function parsenumbers(el)
 end
 
 function save()
-  infected = fetchcurrent()[:infected]
+  stats = fetchcurrent()
+  infected = stats[:infected]
+  infected[:deaths] = stats[:deaths][:total]
   df = DataFrame(infected)
   persisted = CSV.read(CSV_FILE)
   unique(vcat(df, persisted), :recordedat) |> CSV.write(CSV_FILE)
