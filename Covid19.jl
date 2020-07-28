@@ -67,12 +67,20 @@ function parsenumbers(el)
 end
 
 function record()
-  stats = fetchcurrent()
-  infected = stats[:infected]
-  infected[:deaths] = stats[:deaths][:total]
+  current = fetchcurrent()
+  recordInfected(current)
+  recordByBorough(current)
+end
+
+function recordInfected(current)
+  infected = current[:infected]
+  infected[:deaths] = current[:deaths][:total]
   df = DataFrame(infected)
   persisted = CSV.read(CSV_FILE)
   unique(vcat(df, persisted), :recordedat) |> CSV.write(CSV_FILE)
+end
+
+function recordByBorough(current)
 end
 
 end # module
