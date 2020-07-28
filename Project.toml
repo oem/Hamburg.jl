@@ -1,3 +1,8 @@
+name = "Hamburg"
+uuid = "fe294631-7164-4d0f-9497-e1b4dc4640c8"
+authors = ["Ömür Özkir <oemuer.oezkir@gmail.com>"]
+version = "0.1.0"
+
 [deps]
 Cascadia = "54eefc05-d75b-58de-a785-1a3403f0919f"
 DataFrames = "a93c6f00-e57d-5684-b7b6-d8193f3e46c0"
