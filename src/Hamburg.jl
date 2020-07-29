@@ -1,7 +1,7 @@
 module Hamburg
 
 using CSV
-export datasets
+export dataset
 
 include("covid-19/Covid19.jl")
 
