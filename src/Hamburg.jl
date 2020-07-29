@@ -5,7 +5,7 @@ export datasets
 
 include("covid-19/Covid19.jl")
 
-function datasets(topic, dataset)
+function dataset(topic, dataset)
   CSV.read("src/$topic/$dataset.csv")
 end
 
