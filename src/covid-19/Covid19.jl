@@ -80,13 +80,13 @@ function recordinfected(current)
     infected = current[:infected]
     infected[:deaths] = current[:deaths][:total]
     df = DataFrame(infected)
-    persisted = CSV.read(CSV_INFECTED, DataFrame)
+    persisted = CSV.read(CSV_INFECTED)
     unique(vcat(df, persisted), :recordedat) |> CSV.write(CSV_INFECTED)
 end
 
 function recordboroughs(current)
     df = DataFrame(current[:boroughs])
-    persisted = CSV.read(CSV_BOROUGHS, DataFrame)
+    persisted = CSV.read(CSV_BOROUGHS)
     unique(vcat(df, persisted), :recordedat) |> CSV.write(CSV_BOROUGHS)
 end
 
