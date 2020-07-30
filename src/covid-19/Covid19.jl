@@ -6,8 +6,8 @@ using Cascadia: matchFirst
 include("DatesInGerman.jl")
 
 const URL = "https://www.hamburg.de/corona-zahlen/"
-const CSV_INFECTED = "src/covid-19/infected.csv"
-const CSV_BOROUGHS = "src/covid-19/boroughs.csv"
+const CSV_INFECTED = joinpath(@__DIR__, "infected.csv")
+const CSV_BOROUGHS = joinpath(@__DIR__, "boroughs.csv")
 
 function fetchcurrent()
     response = HTTP.get(URL)
