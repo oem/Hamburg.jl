@@ -13,7 +13,15 @@ dataset(topic, dataset)
 
 ### covid-19
 
-Source: [hamburg.de](https://www.hamburg.de/corona-zahlen)
+#### Sources
+
+Since July 27, 2020:
+
+[hamburg.de](https://www.hamburg.de/corona-zahlen)
+
+Before July 27, 2020:
+
+[Robert Koch Institut](https://www.rki.de/DE/Content/InfAZ/N/Neuartiges_Coronavirus/Situationsberichte/Gesamt.html)
 
 #### datasets
 
