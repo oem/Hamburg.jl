@@ -5,6 +5,7 @@ A little package that makes various information about Hamburg, Germany available
 ## Usage
 
 ```julia
+]add https://github.com/oem/Hamburg.jl
 using Hamburg
 dataset(topic, dataset)
 ```
