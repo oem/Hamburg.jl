@@ -24,6 +24,12 @@ Before July 27, 2020:
 
 [Robert Koch Institut](https://www.rki.de/DE/Content/InfAZ/N/Neuartiges_Coronavirus/Situationsberichte/Gesamt.html)
 
+The datasets are also available as csv files, in case you want to use them separately:
+
+[infected](https://github.com/oem/Hamburg.jl/blob/master/src/covid-19/infected.csv)
+
+[boroughs](https://github.com/oem/Hamburg.jl/blob/master/src/covid-19/boroughs.csv)
+
 #### datasets
 
 ##### infected
