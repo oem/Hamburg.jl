@@ -9,7 +9,7 @@ include("covid-19/Covid19.jl")
 General usage: `dataset(topic, dataset)`\n
 For example: `dataset("covid-19", "infected")`
 """
-function dataset(topic, dataset)
+function dataset(topic::String, dataset::String)::DataFrame
     CSV.read(joinpath(@__DIR__, topic, "$dataset.csv"))
 end
 
