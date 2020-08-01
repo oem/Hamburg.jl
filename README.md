@@ -14,7 +14,7 @@ dataset(topic, dataset)
 
 ### covid-19
 
-#### Sources
+#### sources
 
 Since July 27, 2020:
 
@@ -57,3 +57,19 @@ The number infected, by borough.
 These are aggregated numbers, representing the cases for the last 14 days. This is so that the privacy of individuals can be guaranteed.
 
 `dataset("covid-19", "boroughs")`
+
+### holidays
+
+#### sources
+
+[publicholidays.de](https://publicholidays.de/school-holidays/hamburg/)
+
+#### datasets
+
+##### school
+
+**Columns**:
+
+- **name**: Name of the holiday
+- **start**: Start date
+- **end**: End date
