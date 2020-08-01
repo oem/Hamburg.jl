@@ -75,3 +75,7 @@ These are aggregated numbers, representing the cases for the last 14 days. This 
 - **name**: Name of the holiday
 - **start**: Start date
 - **end**: End date
+
+## Contribute?
+
+Yes, absolutely! If you have an interesting dataset, be it favourite ramen places in hamburg, high/low tide times or anything else, go for it. Just make sure that you provide your sources.
