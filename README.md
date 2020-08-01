@@ -68,6 +68,8 @@ These are aggregated numbers, representing the cases for the last 14 days. This 
 
 ##### school
 
+`dataset("holidays", "school")`
+
 **Columns**:
 
 - **name**: Name of the holiday
