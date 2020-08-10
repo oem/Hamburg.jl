@@ -22,7 +22,7 @@ function fetchcurrent()
 
     Dict(:infected => Dict(:total => infected[1], :recovered => infected[2], :new => infected[3], :recordedat => recordedat),
        :deaths => Dict(:total => deaths[1], :new => deaths[2]),
-       :hospitalizations => Dict(:total => hospitalizations[1], :intesivecare => hospitalizations[2]),
+       :hospitalizations => Dict(:total => hospitalizations[1], :intensivecare => hospitalizations[2]),
        :trend => trend,
        :boroughs => boroughs)
 end
@@ -80,6 +80,8 @@ end
 function recordinfected(current)
     infected = current[:infected]
     infected[:deaths] = current[:deaths][:total]
+    infected[:hospitalizations] = current[:hospitalizations][:total]
+    infected[:intensivecare] = current[:hospitalizations][:intensivecare]
     df = DataFrame(infected)
     persisted = CSV.read(CSV_INFECTED)
     unique(vcat(df, persisted), :recordedat) |> CSV.write(CSV_INFECTED)
