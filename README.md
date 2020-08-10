@@ -20,6 +20,8 @@ Since July 27, 2020:
 
 [hamburg.de](https://www.hamburg.de/corona-zahlen)
 
+Since August 10, the number of hospitalized patients from this source is also being stored.
+
 Before July 27, 2020:
 
 [Robert Koch Institut](https://www.rki.de/DE/Content/InfAZ/N/Neuartiges_Coronavirus/Situationsberichte/Gesamt.html)
@@ -49,6 +51,8 @@ Number of people infected by covid-19, recorded since July 27, 2020
 - **recordedat**: Date of measurement
 - **recovered**: Number of people recovered (not a precise number since people are not required to report recoveries)
 - **total**: Total number of confirmed cases
+- **hospitalizations**: Total number of hospitalized patients (due to covid 19), including the patients in intensive care
+- **intensivecare**: Number of patients in intensive care due to covid 19
 
 ##### boroughs
 
