@@ -22,6 +22,7 @@ function fetchcurrent()
 
     Dict(:infected => Dict(:total => infected[1], :recovered => infected[2], :new => infected[3], :recordedat => recordedat),
        :deaths => Dict(:total => deaths[1], :new => deaths[2]),
+       :hospitalizations => Dict(:total => hospitalizations[1], :intesivecare => hospitalizations[2]),
        :trend => trend,
        :boroughs => boroughs)
 end
