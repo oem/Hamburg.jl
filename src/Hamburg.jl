@@ -10,7 +10,7 @@ General usage: `dataset(topic, dataset)`\n
 For example: `dataset("covid-19", "infected")`
 """
 function dataset(topic::String, dataset::String)::DataFrame
-    CSV.read(joinpath(@__DIR__, topic, "$dataset.csv"))
+    CSV.read(joinpath(@__DIR__, topic, "$dataset.csv"), DataFrame)
 end
 
 end # module
