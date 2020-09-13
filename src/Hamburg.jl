@@ -1,13 +1,19 @@
 module Hamburg
 
 using CSV, DataFrames
+using Documenter, DocStringExtensions
 export dataset
 
 include("covid-19/Covid19.jl")
+
 """
-`dataset` exposes various datasets, organized by topic.\n
-General usage: `dataset(topic, dataset)`\n
-For example: `dataset("covid-19", "infected")`
+$(SIGNATURES)
+Takes topic and name of the specific dataset and loads it into a DataFrame.
+
+# Examples
+```julia-repl
+julia> dataset("covid-19", "infected")
+```
 """
 function dataset(topic::String, dataset::String)::DataFrame
     CSV.read(joinpath(@__DIR__, topic, "$dataset.csv"), DataFrame)
