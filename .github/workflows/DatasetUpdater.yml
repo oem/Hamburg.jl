@@ -10,6 +10,6 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
       - name: Hamburg.Covid19.record()
-        run: julia -e 'using Pkg; Pkg.activate("."); include("src/Hamburg.jl"); Hamburg.Covid19.record()'
+        run: julia -e 'using Pkg; Pkg.activate("."); Pkg.instantiate(); include("src/Hamburg.jl"); Hamburg.Covid19.record()'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
