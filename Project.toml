@@ -1,6 +1,6 @@
+authors = ["Ömür Özkir <oemuer.oezkir@gmail.com>"]
 name = "Hamburg"
 uuid = "fe294631-7164-4d0f-9497-e1b4dc4640c8"
-authors = ["Ömür Özkir <oemuer.oezkir@gmail.com>"]
 version = "0.1.0"
 
 [deps]
@@ -15,10 +15,11 @@ HTTP = "cd3eb016-35fb-5094-929b-558a96fad6f3"
 Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
 
 [compat]
-DataFrames = "0.21"
-Gumbo = "0.8"
 CSV = "0.7"
-HTTP = "0.8"
 Cascadia = "1.0"
+DataFrames = "0.21"
 DocStringExtensions = "0.8"
 Documenter = "0.25"
+Gumbo = "0.8"
+HTTP = "0.8"
+julia = "1.0"
