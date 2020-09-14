@@ -15,3 +15,6 @@ jobs:
         run: julia -e 'using Pkg; Pkg.activate("."); using Hamburg; Hamburg.Covid19.record()'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: Updates covid-19 datasets
