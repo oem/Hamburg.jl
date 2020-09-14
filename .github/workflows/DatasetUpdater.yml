@@ -8,6 +8,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: pkg"activate ."
-        run: julia -e 'using Pkg; pkg"activate ."; using Hamburg; Hamburg.Covid19.record()'
+        run: julia -e 'using Pkg; Pkg.activate("."); using Hamburg; Hamburg.Covid19.record()'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
