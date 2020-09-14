@@ -7,8 +7,8 @@ jobs:
   DatasetUpdater:
     runs-on: ubuntu-latest
     steps:
-      - name: Pkg.add(PackageSpec(url="https://github.com/oem/Hamburg.jl"))
-        run: julia -e 'using Pkg; Pkg.add(PackageSpec(url="https://github.com/oem/Hamburg.jl"))'
+      - name: pkg"activate ."
+        run: julia -e 'using Pkg; pkg"activate ."'
       - name: Hamburg.Covid19.record()
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
