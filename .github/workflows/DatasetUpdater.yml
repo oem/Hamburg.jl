@@ -10,7 +10,7 @@ jobs:
       - uses: actions/checkout@v2
       - uses: julia-actions/setup-julia@latest
       - name: Install dependencies
-        run: julia -e "using Pkg; pkg"activate ."; Pkg.instantiate()"
+        run: julia -e 'using Pkg; Pkg.activate("."); Pkg.instantiate()'
       - name: Hamburg.Covid19.record()
         run: julia -e 'using Pkg; Pkg.activate("."); using Hamburg; Hamburg.Covid19.record()'
         env:
