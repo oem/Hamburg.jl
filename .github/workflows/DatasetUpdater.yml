@@ -1,10 +1,10 @@
-name: Covid19Datasets
+name: DatasetUpdater
 on:
   schedule:
     - cron: '00 14 * * *'
   workflow_dispatch:
 jobs:
-  CompatHelper:
+  DatasetUpdater:
     runs-on: ubuntu-latest
     steps:
       - name: Pkg.add(PackageSpec(url="https://github.com/oem/Hamburg.jl"))
