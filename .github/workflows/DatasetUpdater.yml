@@ -7,9 +7,11 @@ jobs:
   DatasetUpdater:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
+      - uses: actions/checkout@v2
+      - uses: julia-actions/setup-julia@latest
+      - name: Install dependencies
+        run: julia -e "using Pkg; Pkg.instantiate()"
       - name: Hamburg.Covid19.record()
-        run: julia -e 'using Pkg; Pkg.activate("."); Pkg.instantiate(); include("src/Hamburg.jl"); Hamburg.Covid19.record()'
+        run: julia -e 'using Pkg; Pkg.activate("."); using Hamburg; Hamburg.Covid19.record()'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
