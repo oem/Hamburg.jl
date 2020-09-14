@@ -36,6 +36,10 @@ The datasets are also available as csv files, in case you want to use them separ
 
 [boroughs.csv](https://github.com/oem/Hamburg.jl/blob/master/src/covid-19/boroughs.csv)
 
+The dataset sources will be checked every day for updates:
+
+![DatasetUpdater](https://github.com/oem/Hamburg.jl/workflows/DatasetUpdater/badge.svg)
+
 #### datasets
 
 ##### infected
