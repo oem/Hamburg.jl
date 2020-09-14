@@ -7,8 +7,8 @@ jobs:
   CompatHelper:
     runs-on: ubuntu-latest
     steps:
-      - name: Pkg.add(PackageSpec(url="https://github.com/oem/Hamburg.jl")
-        run: julia -e 'using Pkg; Pkg.add(PackageSpec(url="https://github.com/oem/Hamburg.jl")'
+      - name: Pkg.add(PackageSpec(url="https://github.com/oem/Hamburg.jl"))
+        run: julia -e 'using Pkg; Pkg.add(PackageSpec(url="https://github.com/oem/Hamburg.jl"))'
       - name: Hamburg.Covid19.record()
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
