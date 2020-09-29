@@ -1,7 +1,7 @@
 authors = ["Ömür Özkir <oemuer.oezkir@gmail.com>"]
 name = "Hamburg"
 uuid = "fe294631-7164-4d0f-9497-e1b4dc4640c8"
-version = "0.1.1"
+version = "0.1.2"
 
 [deps]
 CSV = "336ed68f-0bac-5ca0-87d4-7b16caf5d00b"
