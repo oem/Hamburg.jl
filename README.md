@@ -30,6 +30,8 @@ The number of deaths are not quite matching up between those two datasources, it
 
 The numbers reported to the RKI are also delayed by one day, the time of recording has been moved back one day to align with the dates from hamburg.de.
 
+There is an [example notebook](https://github.com/oem/Hamburg.jl/blob/master/docs/Hamburg.ipynb) that digs a bit deeper into the data and visualizes it.
+
 The datasets are also available as csv files, in case you want to use them separately:
 
 [infected.csv](https://github.com/oem/Hamburg.jl/blob/master/src/covid-19/infected.csv)
