@@ -19,12 +19,14 @@ function fetchcurrent()
     trend = parsetrend(html.root)
     boroughs = parseboroughs(html.root)
     recordedat = parsedateinfected(html.root)
+    agegroups = parseagegroups(html.root)
 
     Dict(:infected => Dict(:total => infected[1], :recovered => infected[2], :new => infected[3], :recordedat => recordedat),
        :deaths => Dict(:total => deaths[1], :new => deaths[2]),
        :hospitalizations => Dict(:total => hospitalizations[1], :intensivecare => hospitalizations[2]),
        :trend => trend,
-       :boroughs => boroughs)
+       :boroughs => boroughs,
+       :agegroups => agegroups)
 end
 
 function parseinfected(root)
@@ -67,10 +69,14 @@ end
 
 function parseagegroups(root)
     rows = eachmatch(sel".table-article tr", root)[8:18]
-    mapped = Dict{String,Any}()
+    mapped = Dict()
     foreach(rows) do row
-        age = parseage(matchFirst(sel"[data-label=\"Alter\"]", row)[1].text)
+        age = matchFirst(sel"[data-label=\"Alter\"]", row)[1].text |> parseage
+        male = parse(Int, row[2][1].text)
+        female = parse(Int, row[3][1].text)
+        mapped[age] = Dict(:male => male, :female => female)
     end
+    mapped
 end
 
 function parseage(age::String)::Union{Int,UnitRange{Int}}
