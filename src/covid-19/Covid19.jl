@@ -69,11 +69,16 @@ function parseagegroups(root)
     rows = eachmatch(sel".table-article tr", root)[8:18]
     mapped = Dict{String,Any}()
     foreach(rows) do row
-        agerange = matchFirst(sel"[data-label=\"Alter\"]", row)[1].text
+        age = parseage(matchFirst(sel"[data-label=\"Alter\"]", row)[1].text)
     end
 end
 
-function parseage(age)
+function parseage(age::String)::Union{Int,UnitRange{Int}}
+    agerange = match(r"^(\d+).+?(\d+)", age)
+    if ! isnothing(agerange)
+        return parse(Int, agerange.captures[1]):parse(Int, agerange.captures[2])
+    end
+
     young = match(r"^bis.(\d+).+$", age)
     if ! isnothing(young)
         return 0:parse(Int, young.captures[1])
@@ -83,6 +88,7 @@ function parseage(age)
     if ! isnothing(old)
         return parse(Int, old.captures[1])
     end
+    throw(ArgumentError("Age $age could not be parsed."))
 end
 
 function parsenumbers(el)
