@@ -2,6 +2,8 @@ using Hamburg
 using DataFrames
 using Test
 
+include("Covid19.jl")
+
 @testset "using `dataset()` to load datasets" begin
     @testset "loads existing datasets into a DataFrame" begin
         df = dataset("covid-19", "infected")

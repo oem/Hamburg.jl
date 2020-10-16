@@ -66,6 +66,23 @@ function parseboroughs(root)
 end
 
 function parseagegroups(root)
+    rows = eachmatch(sel".table-article tr", root)[8:18]
+    mapped = Dict{String,Any}()
+    foreach(rows) do row
+        agerange = matchFirst(sel"[data-label=\"Alter\"]", row)[1].text
+    end
+end
+
+function parseage(age)
+    young = match(r"^bis.(\d+).+$", age)
+    if ! isnothing(young)
+        return 0:parse(Int, young.captures[1])
+    end
+
+    old = match(r"über.(\d+).*$", age)
+    if ! isnothing(old)
+        return parse(Int, old.captures[1])
+    end
 end
 
 function parsenumbers(el)
