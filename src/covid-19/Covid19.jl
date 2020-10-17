@@ -76,6 +76,9 @@ function parseagegroups(root)
         female = parse(Int, row[3][1].text)
         mapped[age] = Dict(:male => male, :female => female)
     end
+
+    daterecorded = eachmatch(sel".table-article+p", root)[2][1].text
+    mapped[:recordedat] =  DatesInGerman.parsefrom(daterecorded)
     mapped
 end
 
@@ -106,7 +109,6 @@ function record()
     current = fetchcurrent()
     recordinfected(current)
     recordboroughs(current)
-    return
 end
 
 function recordinfected(current)
