@@ -8,6 +8,7 @@ include("DatesInGerman.jl")
 const URL = "https://www.hamburg.de/corona-zahlen/"
 const CSV_INFECTED = joinpath(@__DIR__, "infected.csv")
 const CSV_BOROUGHS = joinpath(@__DIR__, "boroughs.csv")
+const CSV_AGEGROUPS = joinpath(@__DIR__, "agegroups.csv")
 
 function fetchcurrent()
     response = HTTP.get(URL)
@@ -69,17 +70,15 @@ end
 
 function parseagegroups(root)
     rows = eachmatch(sel".table-article tr", root)[8:18]
-    mapped = Dict()
-    foreach(rows) do row
-        age = matchFirst(sel"[data-label=\"Alter\"]", row)[1].text |> parseage
+    mapped = Dict{String,Any}()
+    daterecorded = eachmatch(sel".table-article+p", root)[2][1].text |> DatesInGerman.parsefrom
+
+    map(rows) do row
+        age = matchFirst(sel"[data-label=\"Alter\"]", row)[1].text |> parseage |> string
         male = parse(Int, row[2][1].text)
         female = parse(Int, row[3][1].text)
-        mapped[age] = Dict(:male => male, :female => female)
+        Dict(:male => male, :female => female, :age => age, :recordedat => daterecorded)
     end
-
-    daterecorded = eachmatch(sel".table-article+p", root)[2][1].text
-    mapped[:recordedat] =  DatesInGerman.parsefrom(daterecorded)
-    mapped
 end
 
 function parseage(age::String)::Union{Int,UnitRange{Int}}
@@ -109,6 +108,7 @@ function record()
     current = fetchcurrent()
     recordinfected(current)
     recordboroughs(current)
+    recordagegroups(current)
 end
 
 function recordinfected(current)
@@ -125,6 +125,12 @@ function recordboroughs(current)
     df = DataFrame(current[:boroughs])
     persisted = CSV.read(CSV_BOROUGHS, DataFrame)
     unique(vcat(df, persisted), :recordedat) |> CSV.write(CSV_BOROUGHS)
+end
+
+function recordagegroups(current)
+    df = DataFrame(current[:agegroups])
+    persisted = CSV.read(CSV_AGEGROUPS, DataFrame)
+    unique(vcat(df, persisted), [:recordedat, :age]) |> CSV.write(CSV_AGEGROUPS)
 end
 
 end # module
