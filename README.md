@@ -38,6 +38,8 @@ The datasets are also available as csv files, in case you want to use them separ
 
 [boroughs.csv](https://github.com/oem/Hamburg.jl/blob/master/src/covid-19/boroughs.csv)
 
+[agegroups.csv](https://github.com/oem/Hamburg.jl/blob/master/src/covid-19/agegroups.csv)
+
 The dataset sources will be checked for updates every day:
 
 ![DatasetUpdater](https://github.com/oem/Hamburg.jl/workflows/DatasetUpdater/badge.svg)
@@ -67,6 +69,12 @@ The number infected, by borough.
 These are aggregated numbers, representing the cases for the last 7 days. This is so that the privacy of individuals can be guaranteed.
 
 `dataset("covid-19", "boroughs")`
+
+##### agegroups
+
+The distribution of age groups among the infected.
+
+`dataset("covid-19", "agegroups")`
 
 ### holidays
 
