@@ -36,7 +36,7 @@ end
 
 function parsedateinfected(root)
     daterecorded = matchFirst(sel".chart_publication", root)[1].text
-    DatesInGerman.parsefrom(daterecorded)
+    DatesInGerman.parsefrom(daterecorded, inwords=false)
 end
 
 function parsedateboroughs(root)
@@ -45,7 +45,12 @@ function parsedateboroughs(root)
 end
 
 function parsedeaths(root)
-    map(parsenumbers, eachmatch(sel".c_chart.two .chart_legend li:not(.c_chart_show_noshow)", root))
+    deaths = map(parsenumbers, eachmatch(sel".c_chart.two .chart_legend li:not(.c_chart_show_noshow)", root))
+    if length(deaths) == 1
+        (deaths[1], 0)
+    else
+        deaths
+    end
 end
 
 function parsehospitalizations(root)
