@@ -36,7 +36,7 @@ end
 
 function parsedateinfected(root)
     daterecorded = matchFirst(sel".chart_publication", root)[1].text
-    DatesInGerman.parsefrom(daterecorded)
+    DatesInGerman.parsefrom(daterecorded, inwords=false)
 end
 
 function parsedateboroughs(root)
