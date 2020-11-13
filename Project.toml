@@ -1,6 +1,6 @@
-authors = ["Ömür Özkir <oemuer.oezkir@gmail.com>"]
 name = "Hamburg"
 uuid = "fe294631-7164-4d0f-9497-e1b4dc4640c8"
+authors = ["Ömür Özkir <oemuer.oezkir@gmail.com>"]
 version = "0.1.5"
 
 [deps]
@@ -21,5 +21,5 @@ DataFrames = "0.21"
 DocStringExtensions = "0.8"
 Documenter = "0.25"
 Gumbo = "0.8"
-HTTP = "0.8"
+HTTP = "0.8, 0.9"
 julia = "1.0"
