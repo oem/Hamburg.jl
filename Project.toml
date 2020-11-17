@@ -1,7 +1,7 @@
 name = "Hamburg"
 uuid = "fe294631-7164-4d0f-9497-e1b4dc4640c8"
 authors = ["Ömür Özkir <oemuer.oezkir@gmail.com>"]
-version = "0.1.5"
+version = "0.1.6"
 
 [deps]
 CSV = "336ed68f-0bac-5ca0-87d4-7b16caf5d00b"
@@ -17,7 +17,7 @@ Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
 [compat]
 CSV = "0.7, 0.8"
 Cascadia = "1.0"
-DataFrames = "0.21"
+DataFrames = "0.21, 0.22"
 DocStringExtensions = "0.8"
 Documenter = "0.25"
 Gumbo = "0.8"
