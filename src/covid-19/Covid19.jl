@@ -1,6 +1,6 @@
 module Covid19
 
-using HTTP, Gumbo, CSV, Cascadia, DataFrames
+using HTTP, Gumbo, CSV, Cascadia, DataFrames, JSON
 using Cascadia: matchFirst
 
 include("DatesInGerman.jl")
@@ -9,6 +9,7 @@ const URL = "https://www.hamburg.de/corona-zahlen/"
 const CSV_INFECTED = joinpath(@__DIR__, "infected.csv")
 const CSV_BOROUGHS = joinpath(@__DIR__, "boroughs.csv")
 const CSV_AGEGROUPS = joinpath(@__DIR__, "agegroups.csv")
+const JSON_INFECTED = joinpath(@__DIR__, "infected.json")
 
 function fetchcurrent()
     response = HTTP.get(URL)
@@ -123,7 +124,11 @@ function recordinfected(current)
     infected[:intensivecare] = current[:hospitalizations][:intensivecare]
     df = DataFrame(infected)
     persisted = CSV.read(CSV_INFECTED, DataFrame)
-    unique(vcat(df, persisted), :recordedat) |> CSV.write(CSV_INFECTED)
+    uniqued = unique(vcat(df, persisted), :recordedat)
+    open(JSON_INFECTED, "w") do f
+        write(f, JSON.json(uniqued))
+    end
+    uniqued |> CSV.write(CSV_INFECTED)
 end
 
 function recordboroughs(current)
