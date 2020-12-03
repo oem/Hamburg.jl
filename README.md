@@ -30,6 +30,12 @@ The number of deaths are not quite matching up between those two datasources, it
 
 The numbers reported to the RKI are also delayed by one day, the time of recording has been moved back one day to align with the dates from hamburg.de.
 
+** Examples **
+
+The dataset is used to show a [color-coded dashboard](https://oem.github.io/covid19/):
+
+![covid19 hh dashboard](doc/dashboard.png "COVID-19 in Hamburg)
+
 There is an [example notebook](https://github.com/oem/Hamburg.jl/blob/master/docs/Hamburg.ipynb) that digs a bit deeper into the data and visualizes it.
 
 The datasets are also available as csv files, in case you want to use them separately:
