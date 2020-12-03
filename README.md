@@ -30,28 +30,6 @@ The number of deaths are not quite matching up between those two datasources, it
 
 The numbers reported to the RKI are also delayed by one day, the time of recording has been moved back one day to align with the dates from hamburg.de.
 
-#### Examples
-
-The dataset is used to show a [color-coded dashboard](https://oem.github.io/covid19/):
-
-![covid19 hh dashboard](docs/dashboard.png "COVID-19 in Hamburg")
-
-There is an [example notebook](https://github.com/oem/Hamburg.jl/blob/master/docs/Hamburg.ipynb) that digs a bit deeper into the data and visualizes it.
-
-#### as CSV
-
-The datasets are also available as csv files, in case you want to use them separately:
-
-[infected.csv](https://github.com/oem/Hamburg.jl/blob/master/src/covid-19/infected.csv)
-
-[boroughs.csv](https://github.com/oem/Hamburg.jl/blob/master/src/covid-19/boroughs.csv)
-
-[agegroups.csv](https://github.com/oem/Hamburg.jl/blob/master/src/covid-19/agegroups.csv)
-
-The dataset sources will be checked for updates every day:
-
-![DatasetUpdater](https://github.com/oem/Hamburg.jl/workflows/DatasetUpdater/badge.svg)
-
 #### datasets
 
 ##### infected
@@ -83,6 +61,28 @@ These are aggregated numbers, representing the cases for the last 7 days. This i
 The distribution of age groups among the infected.
 
 `dataset("covid-19", "agegroups")`
+
+#### Examples
+
+The dataset is used to show a [color-coded dashboard](https://oem.github.io/covid19/):
+
+![covid19 hh dashboard](docs/dashboard.png 'COVID-19 in Hamburg')
+
+There is an [example notebook](https://github.com/oem/Hamburg.jl/blob/master/docs/Hamburg.ipynb) that digs a bit deeper into the data and visualizes it.
+
+#### as CSV
+
+The datasets are also available as csv files, in case you want to use them separately:
+
+[infected.csv](https://github.com/oem/Hamburg.jl/blob/master/src/covid-19/infected.csv)
+
+[boroughs.csv](https://github.com/oem/Hamburg.jl/blob/master/src/covid-19/boroughs.csv)
+
+[agegroups.csv](https://github.com/oem/Hamburg.jl/blob/master/src/covid-19/agegroups.csv)
+
+The dataset sources will be checked for updates every day:
+
+![DatasetUpdater](https://github.com/oem/Hamburg.jl/workflows/DatasetUpdater/badge.svg)
 
 ### holidays
 
