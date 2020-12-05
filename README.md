@@ -14,6 +14,8 @@ dataset(topic, dataset)
 
 ### covid-19
 
+![covid19](docs/clusters.png)
+
 #### sources
 
 Since July 27, 2020:
