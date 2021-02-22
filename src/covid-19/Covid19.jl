@@ -1,7 +1,7 @@
 module Covid19
 
 using HTTP, Gumbo, CSV, Cascadia, DataFrames, JSON
-using Cascadia: matchFirst
+using Cascadia:matchFirst
 
 include("DatesInGerman.jl")
 
@@ -16,15 +16,15 @@ function fetchcurrent()
     html = parsehtml(String(response))
 
     infected = parseinfected(html.root)
+    recordedat = parsedateinfected(html.root)
     deaths = parsedeaths(html.root)
     hospitalizations = parsehospitalizations(html.root)
     trend = parsetrend(html.root)
     boroughs = parseboroughs(html.root)
-    recordedat = parsedateinfected(html.root)
     agegroups = parseagegroups(html.root)
 
-    Dict(:infected => Dict(:total => infected[1], :recovered => infected[2], :new => infected[3], :recordedat => recordedat),
-       :deaths => Dict(:total => deaths[1], :new => deaths[2]),
+    Dict(:infected => Dict(:new => infected[1], :total => infected[2], :recovered => infected[3], :recordedat => recordedat),
+       :deaths => Dict(:new => deaths[1], :total => deaths[2]),
        :hospitalizations => Dict(:total => hospitalizations[1], :intensivecare => hospitalizations[2]),
        :trend => trend,
        :boroughs => boroughs,
@@ -32,7 +32,7 @@ function fetchcurrent()
 end
 
 function parseinfected(root)
-    map(parsenumbers, eachmatch(sel".c_chart.one .chart_legend li", root))
+    map(parsenumbers, eachmatch(sel".nav-main__wrapper .dashboar_number", root)[1:3])
 end
 
 function parsedateinfected(root)
@@ -46,12 +46,7 @@ function parsedateboroughs(root)
 end
 
 function parsedeaths(root)
-    deaths = map(parsenumbers, eachmatch(sel".c_chart.two .chart_legend li:not(.c_chart_show_noshow)", root))
-    if length(deaths) == 1
-        (deaths[1], 0)
-    else
-        deaths
-    end
+    map(parsenumbers, eachmatch(sel".nav-main__wrapper .dashboar_number", root)[10:11])
 end
 
 function parsehospitalizations(root)
@@ -106,7 +101,7 @@ function parseage(age::String)::Union{Int,UnitRange{Int}}
 end
 
 function parsenumbers(el)
-    text = el[2].text
+    text = el[1].text
     parse(Int, match(r"\d+", text).match)
 end
 
