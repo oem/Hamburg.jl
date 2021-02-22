@@ -50,7 +50,7 @@ function parsedeaths(root)
 end
 
 function parsehospitalizations(root)
-    map(parsenumbers, eachmatch(sel".c_chart.three .chart_legend li", root))
+    map(parsenumbers, eachmatch(sel".nav-main__wrapper .dashboar_number", root)[7:8])
 end
 
 function parsetrend(root)
