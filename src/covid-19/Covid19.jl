@@ -123,6 +123,8 @@ function recordinfected(current)
     infected[:deaths] = current[:deaths][:total]
     infected[:hospitalizations] = current[:hospitalizations][:total]
     infected[:intensivecare] = current[:hospitalizations][:intensivecare]
+    infected[:first_vaccination] = current[:vaccinations][:first_vaccination]
+    infected[:second_vaccination] = current[:vaccinations][:second_vaccination]
     df = DataFrame(infected)
     persisted = CSV.read(CSV_INFECTED, DataFrame)
     uniqued = unique(vcat(df, persisted), :recordedat)
