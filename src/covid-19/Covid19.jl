@@ -16,6 +16,7 @@ function fetchcurrent()
     html = parsehtml(String(response))
 
     infected = parseinfected(html.root)
+    vaccinations = parsevaccinated(html.root)
     recordedat = parsedateinfected(html.root)
     deaths = parsedeaths(html.root)
     hospitalizations = parsehospitalizations(html.root)
@@ -26,6 +27,7 @@ function fetchcurrent()
     Dict(:infected => Dict(:new => infected[1], :total => infected[2], :recovered => infected[3], :recordedat => recordedat),
        :deaths => Dict(:new => deaths[1], :total => deaths[2]),
        :hospitalizations => Dict(:total => hospitalizations[1], :intensivecare => hospitalizations[2]),
+       :vaccinations => Dict(:first_vaccination => vaccinations[1], :second_vaccination => vaccinations[2]),
        :trend => trend,
        :boroughs => boroughs,
        :agegroups => agegroups)
@@ -38,6 +40,10 @@ end
 function parsedateinfected(root)
     daterecorded = matchFirst(sel".chart_publication", root)[1].text
     DatesInGerman.parsefrom(daterecorded, inwords=false)
+end
+
+function parsevaccinated(root)
+    map(parsenumbers, eachmatch(sel".nav-main__wrapper .dashboar_number", root)[5:6])
 end
 
 function parsedateboroughs(root)
