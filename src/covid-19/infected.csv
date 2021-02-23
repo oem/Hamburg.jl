@@ -1,4 +1,4 @@
-deaths,hospitalizations,intensivecare,new,recordedat,recovered,total
+deaths,hospitalizations,intensivecare,new,recordedat,recovered,total,first_vaccination,second_vaccination
 1223,306,75,219,2021-02-22,45400,50524
 1223,306,75,219,2021-02-22,45400,50524
 1223,306,75,113,2021-02-21,45200,50305
