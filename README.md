@@ -49,6 +49,8 @@ Number of people infected by covid-19, recorded since July 27, 2020
 - **total**: Total number of confirmed cases
 - **hospitalizations**: Total number of hospitalized patients (due to covid 19), including the patients in intensive care
 - **intensivecare**: Number of patients in intensive care due to covid 19
+- **first_vaccination**: Number of people who received the first shot of the vaccine
+- **second_vaccination**: Number of people who received the second shot of the vaccine
 
 ##### boroughs
 
