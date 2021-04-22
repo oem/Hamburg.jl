@@ -1,6 +1,6 @@
-authors = ["Ömür Özkir <oemuer.oezkir@gmail.com>"]
 name = "Hamburg"
 uuid = "fe294631-7164-4d0f-9497-e1b4dc4640c8"
+authors = ["Ömür Özkir <oemuer.oezkir@gmail.com>"]
 version = "0.1.16"
 
 [deps]
@@ -20,7 +20,7 @@ Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
 CSV = "0.7, 0.8"
 Cascadia = "1.0"
 CategoricalArrays = "0.9"
-DataFrames = "0.21, 0.22"
+DataFrames = "0.21, 0.22, 1.0"
 DocStringExtensions = "0.8"
 Documenter = "0.25, 0.26"
 Gumbo = "0.8"
