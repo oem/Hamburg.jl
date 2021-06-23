@@ -77,7 +77,6 @@ end
 
 function parseagegroups(root)
     rows = eachmatch(sel".table-article tr", root)[8:18]
-    mapped = Dict{String,Any}()
     daterecorded = eachmatch(sel".table-article+p", root)[2][1].text |> DatesInGerman.parsefrom
 
     map(rows) do row
