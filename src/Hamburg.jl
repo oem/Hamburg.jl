@@ -5,6 +5,7 @@ using Documenter, DocStringExtensions
 export dataset
 
 include("covid-19/Covid19.jl")
+include("pollen/Pollen.jl")
 
 """
 $(SIGNATURES)
