@@ -5,6 +5,7 @@ using Cascadia:matchFirst
 
 const URL = "https://www.wetteronline.de/?gid=10147&pcid=pc_city_pollen&sid=StationDetail"
 const CSV_POLLEN = joinpath(@__DIR__, "levels.csv")
+const JSON_POLLEN = joinpath(@__DIR__, "levels.json")
 
 function fetch()
     response = HTTP.get(URL)
@@ -32,7 +33,12 @@ end
 function record()
     persisted = CSV.read(CSV_POLLEN, DataFrame)
     df = fetch()
-    unique(vcat(df, persisted), :date) |> CSV.write(CSV_POLLEN)
+    uniqued = unique(vcat(df, persisted), :date)
+    uniqued |> CSV.write(CSV_POLLEN)
+
+    open(JSON_POLLEN, "w") do f
+        write(f, JSON.json(uniqued))
+    end
 end
 
 function parsedate(root)
