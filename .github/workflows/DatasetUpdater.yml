@@ -1,7 +1,7 @@
 name: DatasetUpdater
 on:
   schedule:
-    - cron: '0 */6 * * *'
+    - cron: "0 */2 * * *"
   workflow_dispatch:
 jobs:
   DatasetUpdater:
@@ -15,6 +15,10 @@ jobs:
         run: julia -e 'using Pkg; Pkg.activate("."); using Hamburg; Hamburg.Covid19.record()'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Hamburg.Pollen.record()
+        run: julia -e 'using Pkg; Pkg.activate("."); using Hamburg; Hamburg.Pollen.record()'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - uses: stefanzweifel/git-auto-commit-action@v4
         with:
-          commit_message: Updates covid-19 datasets
+          commit_message: Updates datasets
