@@ -4,6 +4,7 @@ using HTTP, Gumbo, CSV, Cascadia, DataFrames, JSON, Dates
 using Cascadia:matchFirst
 
 const URL = "https://www.wetteronline.de/?gid=10147&pcid=pc_city_pollen&sid=StationDetail"
+const CSV_POLLEN = joinpath(@__DIR__, "pollen.csv")
 
 function fetch()
     response = HTTP.get(URL)
@@ -28,6 +29,12 @@ function fetch()
     date = dates) |> DataFrame
 end
 
+function record()
+    persisted = CSV.read(CSV_POLLEN, DataFrame)
+    df = fetch()
+    unique(vcat(df, persisted), :date) |> CSV.write(CSV_POLLEN)
+end
+
 function parsedate(root)
     datestring = matchFirst(sel"#date0 p", root)[1].text
     parts = match(r"(\d+)\.(\d+)\.", datestring).captures
@@ -36,7 +43,6 @@ function parsedate(root)
 end
 
 function parsetable(root)
-    # use or new dataframe
     table = matchFirst(sel"#pollen_tabelle", root)
     parsecategories(table, ("elm_text",
                             "wil_text",
