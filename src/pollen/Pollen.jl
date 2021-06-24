@@ -7,7 +7,7 @@ const URL = "https://www.wetteronline.de/?gid=10147&pcid=pc_city_pollen&sid=Stat
 const CSV_POLLEN = joinpath(@__DIR__, "levels.csv")
 const JSON_POLLEN = joinpath(@__DIR__, "levels.json")
 
-function fetch()
+function fetch()::NamedTuple
     response = HTTP.get(URL)
     html = parsehtml(String(response))
     dates = parsedate(html.root)
@@ -27,12 +27,12 @@ function fetch()
     sorrel = sorrel,
     rye = rye,
     grass = grass,
-    date = dates) |> DataFrame
+    date = dates)
 end
 
 function record()
     persisted = CSV.read(CSV_POLLEN, DataFrame)
-    df = fetch()
+    df = fetch() |> DataFrame
     uniqued = unique(vcat(df, persisted), :date)
     uniqued |> CSV.write(CSV_POLLEN)
 
@@ -41,7 +41,7 @@ function record()
     end
 end
 
-function parsedate(root)
+function parsedate(root)::Vector{Date}
     datestring = matchFirst(sel"#date0 p", root)[1].text
     parts = match(r"(\d+)\.(\d+)\.", datestring).captures
     current = Date(Dates.year(today()), parse(Int, parts[2]), parse(Int, parts[1]))
