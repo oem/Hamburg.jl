@@ -9,9 +9,14 @@ function fetch()
     response = HTTP.get(URL)
     html = parsehtml(String(response))
     dates = parsedate(html.root)
-    oak, beech, birch, mugwort, ragweed, plantain, sorrel, rye, grass = parsetable(html.root)
+    elm, willow, poplar, hazel, alder, oak, beech, birch, mugwort, ragweed, plantain, sorrel, rye, grass = parsetable(html.root)
 
-    (oak = oak,
+    (elm = elm,
+    willow = willow,
+    poplar = poplar,
+    hazel = hazel,
+    alder = alder,
+    oak = oak,
     beech = beech,
     birch = birch,
     mugwort = mugwort,
@@ -32,9 +37,13 @@ end
 
 function parsetable(root)
     # use or new dataframe
-    # parse dates
     table = matchFirst(sel"#pollen_tabelle", root)
-    parsecategories(table, ("oak_text",
+    parsecategories(table, ("elm_text",
+                            "wil_text",
+                            "pop_text",
+                            "haz_text",
+                            "ald_text",
+                            "oak_text",
                             "bee_text",
                             "bir_text",
                             "mug_text",
