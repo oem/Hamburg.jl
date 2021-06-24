@@ -4,7 +4,7 @@ using HTTP, Gumbo, CSV, Cascadia, DataFrames, JSON, Dates
 using Cascadia:matchFirst
 
 const URL = "https://www.wetteronline.de/?gid=10147&pcid=pc_city_pollen&sid=StationDetail"
-const CSV_POLLEN = joinpath(@__DIR__, "pollen.csv")
+const CSV_POLLEN = joinpath(@__DIR__, "levels.csv")
 
 function fetch()
     response = HTTP.get(URL)
