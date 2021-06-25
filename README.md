@@ -108,10 +108,6 @@ The dataset sources will be checked for updates every day:
 
 ### pollen
 
-#### sources
-
-[wetteronline.de](https://www.wetteronline.de/)
-
 #### datasets
 
 ##### levels
