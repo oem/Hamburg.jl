@@ -1,6 +1,6 @@
 module Pollen
 
-using HTTP, Gumbo, CSV, Cascadia, DataFrames, JSON, Dates
+using HTTP, Gumbo, CSV, Cascadia, DataFrames, JSONTables, Dates
 using Pipe:@pipe
 using Cascadia:matchFirst
 
@@ -37,7 +37,7 @@ function record()
     df |> CSV.write(CSV_POLLEN)
 
     open(JSON_POLLEN, "w") do f
-        write(f, JSON.json(df))
+        write(f, arraytable(df))
     end
 end
 

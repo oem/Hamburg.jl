@@ -14,6 +14,7 @@ Documenter = "e30172f5-a6a5-5a46-863b-614d45cd2de4"
 Gumbo = "708ec375-b3d6-5a57-a7ce-8257bf98657a"
 HTTP = "cd3eb016-35fb-5094-929b-558a96fad6f3"
 JSON = "682c06a0-de6a-54ab-a142-c8b1cf79cde6"
+JSONTables = "b9914132-a727-11e9-1322-f18e41205b0b"
 Pipe = "b98c9c47-44ae-5843-9183-064241ee97a0"
 Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
 
