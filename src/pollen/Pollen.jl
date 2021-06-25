@@ -1,6 +1,7 @@
 module Pollen
 
 using HTTP, Gumbo, CSV, Cascadia, DataFrames, JSON, Dates
+using Pipe:@pipe
 using Cascadia:matchFirst
 
 const URL = "https://www.wetteronline.de/?gid=10147&pcid=pc_city_pollen&sid=StationDetail"
@@ -32,12 +33,11 @@ end
 
 function record()
     persisted = CSV.read(CSV_POLLEN, DataFrame)
-    df = fetch() |> DataFrame
-    uniqued = unique(vcat(df, persisted), :date)
-    uniqued |> CSV.write(CSV_POLLEN)
+    df = @pipe fetch() |> DataFrame |> vcat(_, persisted) |> unique(_, :date) |> sort!(_, :date, rev=true)
+    df |> CSV.write(CSV_POLLEN)
 
     open(JSON_POLLEN, "w") do f
-        write(f, JSON.json(uniqued))
+        write(f, JSON.json(df))
     end
 end
 
