@@ -42,7 +42,7 @@ function record()
 end
 
 function format_date(date::Date)::String
-    "$(Dates.monthname(date)) $(Dates.day(date)), $(Dates.year(date))"
+    "$(Dates.dayname(date)), $(Dates.monthname(date)) $(Dates.day(date))"
 end
 
 function parsedate(root)::Vector{Date}
