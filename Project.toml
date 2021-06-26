@@ -16,6 +16,7 @@ HTTP = "cd3eb016-35fb-5094-929b-558a96fad6f3"
 JSON = "682c06a0-de6a-54ab-a142-c8b1cf79cde6"
 JSONTables = "b9914132-a727-11e9-1322-f18e41205b0b"
 Pipe = "b98c9c47-44ae-5843-9183-064241ee97a0"
+Query = "1a8c2f83-1ff3-5112-b086-8aa67b057ba1"
 Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
 
 [compat]
@@ -29,4 +30,5 @@ Gumbo = "0.8"
 HTTP = "0.8, 0.9"
 JSON = "0.21"
 JSONTables = "1"
+Pipe = "1"
 julia = "1.0"

@@ -1,24 +1,29 @@
 name: DatasetUpdater
 on:
   schedule:
-    - cron: "0 */2 * * *"
+    - cron: "0 */3 * * *"
   workflow_dispatch:
 jobs:
   DatasetUpdater:
     runs-on: ubuntu-latest
+    environment: ci
     steps:
       - uses: actions/checkout@v2
       - uses: julia-actions/setup-julia@latest
       - name: Install dependencies
+        env:
+          POLLEN_API_URL: ${{ secrets.POLLEN_API_URL }}
         run: julia -e 'using Pkg; Pkg.activate("."); Pkg.instantiate()'
       - name: Hamburg.Covid19.record()
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          POLLEN_API_URL: ${{ secrets.POLLEN_API_URL }}
         run: julia -e 'using Pkg; Pkg.activate("."); using Hamburg; Hamburg.Covid19.record()'
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Hamburg.Pollen.record()
-        run: julia -e 'using Pkg; Pkg.activate("."); using Hamburg; Hamburg.Pollen.record()'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          POLLEN_API_URL: ${{ secrets.POLLEN_API_URL }}
+        run: julia -e 'using Pkg; Pkg.activate("."); using Hamburg; Hamburg.Pollen.record()'
       - uses: stefanzweifel/git-auto-commit-action@v4
         with:
           commit_message: Updates datasets

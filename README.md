@@ -106,14 +106,6 @@ The dataset sources will be checked for updates every day:
 - **start**: Start date
 - **end**: End date
 
-### pollen
-
-#### datasets
-
-##### levels
-
-`dataset("pollen", "levels")`
-
 ## Contribute?
 
 Yes, absolutely! If you have an interesting dataset, be it favourite ramen places in hamburg, high/low tide times or anything else, go for it. Just make sure that you provide your sources.
