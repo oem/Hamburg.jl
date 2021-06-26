@@ -4,11 +4,11 @@ using HTTP, Gumbo, CSV, Cascadia, DataFrames, JSONTables, Dates, Query
 using Pipe:@pipe
 using Cascadia:matchFirst
 
-const URL = ENV["POLLEN_API_URL"]
 const CSV_POLLEN = joinpath(@__DIR__, "levels.csv")
 const JSON_POLLEN = joinpath(@__DIR__, "levels.json")
 
 function fetch()::NamedTuple
+    URL = ENV["POLLEN_API_URL"]
     response = HTTP.get(URL)
     html = parsehtml(String(response))
     dates = parsedate(html.root)
