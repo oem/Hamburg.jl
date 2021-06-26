@@ -1,6 +1,6 @@
 module Pollen
 
-using HTTP, Gumbo, CSV, Cascadia, DataFrames, JSONTables, Dates
+using HTTP, Gumbo, CSV, Cascadia, DataFrames, JSONTables, Dates, Query
 using Pipe:@pipe
 using Cascadia:matchFirst
 
@@ -37,8 +37,12 @@ function record()
     df |> CSV.write(CSV_POLLEN)
 
     open(JSON_POLLEN, "w") do f
-        write(f, arraytable(df))
+        write(f, arraytable(df |> @mutate(formatted_date = format_date(_.date)) |> DataFrame))
     end
+end
+
+function format_date(date::Date)::String
+    "$(Dates.monthname(date)) $(Dates.day(date)), $(Dates.year(date))"
 end
 
 function parsedate(root)::Vector{Date}
