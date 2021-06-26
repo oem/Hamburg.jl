@@ -15,6 +15,7 @@ jobs:
         run: julia -e 'using Pkg; Pkg.activate("."); using Hamburg; Hamburg.Covid19.record()'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          POLLEN_API_URL: ${{ secrets.POLLEN_API_URL }}
       - name: Hamburg.Pollen.record()
         run: julia -e 'using Pkg; Pkg.activate("."); using Hamburg; Hamburg.Pollen.record()'
         env:
