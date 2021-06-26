@@ -41,9 +41,7 @@ function record()
     end
 end
 
-function format_date(date::Date)::String
-    "$(Dates.dayname(date)), $(Dates.monthname(date)) $(Dates.day(date))"
-end
+format_date(date::Date)::String = "$(Dates.dayname(date)), $(Dates.monthname(date)) $(Dates.day(date))"
 
 function parsedate(root)::Vector{Date}
     datestring = matchFirst(sel"#date0 p", root)[1].text
