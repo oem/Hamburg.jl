@@ -8,8 +8,8 @@ const CSV_POLLEN = joinpath(@__DIR__, "levels.csv")
 const JSON_POLLEN = joinpath(@__DIR__, "levels.json")
 
 function fetch()::NamedTuple
-    URL = ENV["POLLEN_API_URL"]
-    response = HTTP.get(URL)
+    url = ENV["POLLEN_API_URL"]
+    response = HTTP.get(url)
     html = parsehtml(String(response))
     dates = parsedate(html.root)
     elm, willow, poplar, hazel, alder, oak, beech, birch, mugwort, ragweed, plantain, sorrel, rye, grass = parsetable(html.root)
