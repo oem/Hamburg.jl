@@ -4,7 +4,7 @@ using HTTP, Gumbo, CSV, Cascadia, DataFrames, JSONTables, Dates
 using Pipe:@pipe
 using Cascadia:matchFirst
 
-const URL = "https://www.wetteronline.de/?gid=10147&pcid=pc_city_pollen&sid=StationDetail"
+const URL = ENV["POLLEN_API_URL"]
 const CSV_POLLEN = joinpath(@__DIR__, "levels.csv")
 const JSON_POLLEN = joinpath(@__DIR__, "levels.json")
 
