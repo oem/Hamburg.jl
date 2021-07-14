@@ -52,7 +52,7 @@ function parsedateboroughs(root)
 end
 
 function parsedeaths(root)
-    map(parsenumbers, eachmatch(sel".nav-main__wrapper .dashboar_number", root)[10:11])
+    map(parsenumbers, eachmatch(sel".nav-main__wrapper .dashboar_number", root)[9:10])
 end
 
 function parsehospitalizations(root)
@@ -76,7 +76,7 @@ function parseboroughs(root)
 end
 
 function parseagegroups(root)
-    rows = eachmatch(sel".table-article tr", root)[8:18]
+    rows = eachmatch(sel".table-article tr", root)[6:16]
     daterecorded = eachmatch(sel".table-article+p", root)[2][1].text |> DatesInGerman.parsefrom
 
     map(rows) do row
