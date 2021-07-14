@@ -64,7 +64,7 @@ function parsetrend(root)
 end
 
 function parseboroughs(root)
-    rows = eachmatch(sel".table-article tr", root)[20:end]
+    rows = eachmatch(sel".table-article tr", root)[18:end]
     mapped = Dict{String,Any}()
     foreach(rows) do row
         name = matchFirst(sel"td:first-child", row)[1].text
