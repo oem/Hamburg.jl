@@ -17,7 +17,7 @@ end
 
 function fromnumbers(date::String)::Date
     parts = match(r"(\d+)\.(\d+)\.(\d+)", date).captures
-    Date(parse(Int, "20$(parts[3])"),
+    Date(parse(Int, (parts[3])),
              parse(Int, parts[2]),
              parse(Int, parts[1]))
 end
