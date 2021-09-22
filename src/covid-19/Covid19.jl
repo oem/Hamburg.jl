@@ -76,8 +76,8 @@ function parseboroughs(root)
 end
 
 function parseagegroups(root)
-    rows = eachmatch(sel".table-article tr", root)[6:16]
-    daterecorded = eachmatch(sel".table-article+p", root)[2][1].text |> DatesInGerman.parsefrom
+    rows = eachmatch(sel"table tr", root)[6:16]
+    daterecorded = eachmatch(sel"table+p", root)[1][1].text |> DatesInGerman.parsefrom
 
     map(rows) do row
         age = matchFirst(sel"[data-label=\"Alter\"]", row)[1].text |> parseage |> string
