@@ -12,6 +12,7 @@ end
 
 @testset "parsing dates that are written in german" begin
     @test Hamburg.Covid19.DatesInGerman.parsefrom("Stand: Sonnabend, 17. Oktober 2020") == Date(2020, 10, 17)
+    @test Hamburg.Covid19.DatesInGerman.parsefrom("Stand: 20. September 2021, 9 Uhr") == Date(2021, 9, 20)
     @test Hamburg.Covid19.DatesInGerman.parsefrom("Stand: 12. Oktober 2020;") == Date(2020, 10, 12)
     @test Hamburg.Covid19.DatesInGerman.parsefrom("(Stand: 03.11.2020)", inwords=false) == Date(2020, 11, 3)
 end

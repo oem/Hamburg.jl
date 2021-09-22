@@ -48,7 +48,7 @@ end
 
 function parsedateboroughs(root)
     daterecorded = eachmatch(sel".table-article + p", root)[end][1].text
-    DatesInGerman.parsefrom(daterecorded)
+    DatesInGerman.parsefrom(daterecorded, inwords=false)
 end
 
 function parsedeaths(root)
