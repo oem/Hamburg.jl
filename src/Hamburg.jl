@@ -1,6 +1,6 @@
 module Hamburg
 
-using CSV, DataFrames
+using CSV, DataFrames, Pipe
 using Documenter, DocStringExtensions
 export dataset
 
@@ -13,11 +13,23 @@ Takes topic and name of the specific dataset and loads it into a DataFrame.
 
 # Examples
 ```julia-repl
-julia> dataset("covid-19", "infected")
+julia> dataset("covid-19", :infected)
+```
+
+```julia-repl
+julia> dataset("covid-19", :infected, fetch = true)
 ```
 """
-function dataset(topic::String, dataset::String)::DataFrame
-    CSV.read(joinpath(@__DIR__, topic, "$dataset.csv"), DataFrame)
+function dataset(topic::String, dataset::Symbol; fetch::Bool = false)::DataFrame
+    if fetch
+        if topic == "covid-19"
+            @pipe Covid19.fetch() |> Covid19.parse |> Covid19.build |> _[dataset]
+        else
+            throw(ArgumentError("live-fetching for $topic/$dataset is currently not supported. But go ahead and open an issue on github if you need this, always happy to hear from you!"))
+        end
+    else
+        CSV.read(joinpath(@__DIR__, topic, "$dataset.csv"), DataFrame)
+    end
 end
 
 end # module
