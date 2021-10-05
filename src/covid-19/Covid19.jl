@@ -11,35 +11,13 @@ const CSV_BOROUGHS = joinpath(@__DIR__, "boroughs.csv")
 const CSV_AGEGROUPS = joinpath(@__DIR__, "agegroups.csv")
 const JSON_INFECTED = joinpath(@__DIR__, "infected.json")
 
-function fetchcurrent()
-    response = HTTP.get(URL)
-    html = parsehtml(String(response))
-
-    infected = parseinfected(html)
-    vaccinations = parsevaccinated(html.root)
-    recordedat = parsedateinfected(html.root)
-    deaths = parsedeaths(html.root)
-    hospitalizations = parsehospitalizations(html.root)
-    trend = parsetrend(html.root)
-    boroughs = parseboroughs(html.root)
-    agegroups = parseagegroups(html.root)
-
-    Dict(:infected => infected,
-       :deaths => Dict(:new => deaths[1], :total => deaths[2]),
-       :hospitalizations => Dict(:total => hospitalizations[1], :intensivecare => hospitalizations[2]),
-       :vaccinations => Dict(:first_vaccination => vaccinations[1], :second_vaccination => vaccinations[2]),
-       :trend => trend,
-       :boroughs => boroughs,
-       :agegroups => agegroups)
-end
-
 function fetch()
     response = HTTP.get(URL)
     parsehtml(String(response))
 end
 
-function parse(html)
-    infected = parseinfected(html)
+function parseall(html)
+    infected = parseinfected(html.root)
     vaccinations = parsevaccinated(html.root)
     recordedat = parsedateinfected(html.root)
     deaths = parsedeaths(html.root)
@@ -63,9 +41,9 @@ function build(current)
          :agegroups => buildagegroups(current))
 end
 
-function parseinfected(html)
-    parsed = map(parsenumbers, eachmatch(sel".nav-main__wrapper .dashboar_number", html.root)[1:3])
-    recordedat = parsedateinfected(html.root)
+function parseinfected(root)
+    parsed = map(parsenumbers, eachmatch(sel".nav-main__wrapper .dashboar_number", root)[1:3])
+    recordedat = parsedateinfected(root)
     Dict(:new => parsed[1], :total => parsed[2], :recovered => parsed[3], :recordedat => recordedat)
 end
 
@@ -166,27 +144,27 @@ function buildagegroups(current)::DataFrame
     unique(vcat(df, persisted), [:recordedat, :age])
 end
 
-function record()
-    current = fetchcurrent()
-    recordinfected(current)
-    recordboroughs(current)
-    recordagegroups(current)
+function record()::Nothing
+    datasets = fetch() |> parseall |> build
+    recordinfected(datasets[:infected])
+    recordboroughs(datasets[:boroughs])
+    recordagegroups(datasets[:agegroups])
+    nothing
 end
 
-function recordinfected(current)
-    df = buildinfected(current)
+function recordinfected(df)
     open(JSON_INFECTED, "w") do f
         write(f, JSON.json(df))
     end
     df |> CSV.write(CSV_INFECTED)
 end
 
-function recordboroughs(current)
-    buildboroughs(current) |> CSV.write(CSV_BOROUGHS)
+function recordboroughs(df)
+    CSV.write(CSV_BOROUGHS, df)
 end
 
-function recordagegroups(current)
-    buildagegroups(current) |> CSV.write(CSV_AGEGROUPS)
+function recordagegroups(df)
+    CSV.write(CSV_AGEGROUPS, df)
 end
 
 end # module
