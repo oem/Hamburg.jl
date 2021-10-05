@@ -33,6 +33,36 @@ function fetchcurrent()
        :agegroups => agegroups)
 end
 
+function fetch()
+    response = HTTP.get(URL)
+    parsehtml(String(response))
+end
+
+function parse(html)
+    infected = parseinfected(html)
+    vaccinations = parsevaccinated(html.root)
+    recordedat = parsedateinfected(html.root)
+    deaths = parsedeaths(html.root)
+    hospitalizations = parsehospitalizations(html.root)
+    trend = parsetrend(html.root)
+    boroughs = parseboroughs(html.root)
+    agegroups = parseagegroups(html.root)
+
+    Dict(:infected => infected,
+       :deaths => Dict(:new => deaths[1], :total => deaths[2]),
+       :hospitalizations => Dict(:total => hospitalizations[1], :intensivecare => hospitalizations[2]),
+       :vaccinations => Dict(:first_vaccination => vaccinations[1], :second_vaccination => vaccinations[2]),
+       :trend => trend,
+       :boroughs => boroughs,
+       :agegroups => agegroups)
+end
+
+function build(current)
+    Dict(:infected => buildinfected(current),
+         :boroughs => buildboroughs(current),
+         :agegroups => buildagegroups(current))
+end
+
 function parseinfected(html)
     parsed = map(parsenumbers, eachmatch(sel".nav-main__wrapper .dashboar_number", html.root)[1:3])
     recordedat = parsedateinfected(html.root)
@@ -42,26 +72,6 @@ end
 function parsedateinfected(root)
     daterecorded = matchFirst(sel".chart_publication", root)[1].text
     DatesInGerman.parsefrom(daterecorded, inwords=false)
-end
-
-function buildinfected(current)::DataFrame
-    infected = current[:infected]
-    infected[:deaths] = current[:deaths][:total]
-    infected[:hospitalizations] = current[:hospitalizations][:total]
-    infected[:intensivecare] = current[:hospitalizations][:intensivecare]
-    infected[:first_vaccination] = current[:vaccinations][:first_vaccination]
-    infected[:second_vaccination] = current[:vaccinations][:second_vaccination]
-    df = DataFrame(infected)
-    persisted = CSV.read(CSV_INFECTED, DataFrame)
-    unique(vcat(df, persisted), :recordedat)
-end
-
-function recordinfected(current)
-    df = buildinfected(current)
-    open(JSON_INFECTED, "w") do f
-        write(f, JSON.json(df))
-    end
-    df |> CSV.write(CSV_INFECTED)
 end
 
 function parsevaccinated(root)
@@ -132,6 +142,30 @@ function parsenumbers(el)
     parse(Int, match(r"\d+", text).match)
 end
 
+function buildinfected(current)::DataFrame
+    infected = current[:infected]
+    infected[:deaths] = current[:deaths][:total]
+    infected[:hospitalizations] = current[:hospitalizations][:total]
+    infected[:intensivecare] = current[:hospitalizations][:intensivecare]
+    infected[:first_vaccination] = current[:vaccinations][:first_vaccination]
+    infected[:second_vaccination] = current[:vaccinations][:second_vaccination]
+    df = DataFrame(infected)
+    persisted = CSV.read(CSV_INFECTED, DataFrame)
+    unique(vcat(df, persisted), :recordedat)
+end
+
+function buildboroughs(current)::DataFrame
+    df = DataFrame(current[:boroughs])
+    persisted = CSV.read(CSV_BOROUGHS, DataFrame)
+    unique(vcat(df, persisted), :recordedat)
+end
+
+function buildagegroups(current)::DataFrame
+    df = DataFrame(current[:agegroups])
+    persisted = CSV.read(CSV_AGEGROUPS, DataFrame)
+    unique(vcat(df, persisted), [:recordedat, :age])
+end
+
 function record()
     current = fetchcurrent()
     recordinfected(current)
@@ -139,16 +173,20 @@ function record()
     recordagegroups(current)
 end
 
+function recordinfected(current)
+    df = buildinfected(current)
+    open(JSON_INFECTED, "w") do f
+        write(f, JSON.json(df))
+    end
+    df |> CSV.write(CSV_INFECTED)
+end
+
 function recordboroughs(current)
-    df = DataFrame(current[:boroughs])
-    persisted = CSV.read(CSV_BOROUGHS, DataFrame)
-    unique(vcat(df, persisted), :recordedat) |> CSV.write(CSV_BOROUGHS)
+    buildboroughs(current) |> CSV.write(CSV_BOROUGHS)
 end
 
 function recordagegroups(current)
-    df = DataFrame(current[:agegroups])
-    persisted = CSV.read(CSV_AGEGROUPS, DataFrame)
-    unique(vcat(df, persisted), [:recordedat, :age]) |> CSV.write(CSV_AGEGROUPS)
+    buildagegroups(current) |> CSV.write(CSV_AGEGROUPS)
 end
 
 end # module
