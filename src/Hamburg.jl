@@ -22,7 +22,6 @@ julia> dataset("covid-19", "infected", fetch = true)
 """
 function dataset(topic::String, dataset::String; fetch::Bool = true)::DataFrame
     if fetch
-        println("fetching!")
     else
         CSV.read(joinpath(@__DIR__, topic, "$dataset.csv"), DataFrame)
     end
