@@ -72,6 +72,10 @@ parsecategories(table, selectors) = map(s -> parsecategory(table, s), selectors)
 
 function parsecategory(table, selector)
     category = matchFirst(Selector("#$selector + .grid_item_pollen_tabelle"), table)
+    if isnothing(category)
+        @info "Assuming that $selector should have zero values for the week."
+        return fill(0, 7)
+    end
     map(b -> grade(b), dayvalues(category))
 end
 
