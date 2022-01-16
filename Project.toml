@@ -20,7 +20,7 @@ Query = "1a8c2f83-1ff3-5112-b086-8aa67b057ba1"
 Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
 
 [compat]
-CSV = "0.7, 0.8, 0.9"
+CSV = "0.7, 0.8, 0.9, 0.10"
 Cascadia = "1.0"
 CategoricalArrays = "0.9, 0.10"
 DataFrames = "0.21, 0.22, 1.0"
