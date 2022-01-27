@@ -132,7 +132,11 @@ function buildinfected(current)::DataFrame
     unique(vcat(df, persisted), :recordedat)
 end
 
-function buildboroughs(current)::DataFrame
+function buildboroughs(current)::Union{DataFrame,Vector}
+    if length(current[:boroughs]) < 8
+        @info "skipping boroughs, not enough information", current[:boroughs]
+        return []
+    end
     df = DataFrame(current[:boroughs])
     persisted = CSV.read(CSV_BOROUGHS, DataFrame)
     unique(vcat(df, persisted), :recordedat)
